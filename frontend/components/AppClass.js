@@ -31,6 +31,8 @@ export default class AppClass extends React.Component {
     const { count, x, y } = this.state;
     let newX = x + xMove;
     let newY = y + yMove;
+    let moved = true;
+
     if (newX < 0) {
       newX = 0;
     } else if (newX > 2) {
@@ -41,8 +43,13 @@ export default class AppClass extends React.Component {
     } else if (newY > 2) {
       newY = 2;
     }
+    if (newX === x && newY === y) {
+      moved = false;
+    }
 
-    this.setState({ count: count + 1, x: newX, y: newY });
+    if (moved) {
+      this.setState({ count: count + 1, x: newX, y: newY });
+    }
   }
   render() {
     const { count, x, y } = this.state;

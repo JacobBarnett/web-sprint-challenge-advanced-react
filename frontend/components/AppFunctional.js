@@ -7,9 +7,12 @@ export default function AppFunctional(props) {
   const [{ x, y }, setCords] = useState({ x: 2, y: 2 });
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
-  function move(x, y) {
+  function move(newX, newY) {
+    if (newX === x && newY === y) {
+      return;
+    }
     setCount(count + 1);
-    setCords({ x: x, y: y });
+    setCords({ x: newX, y: newY });
   }
   const grid = [];
   for (let yy = 1; yy <= 3; yy++) {
