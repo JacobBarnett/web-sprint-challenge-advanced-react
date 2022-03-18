@@ -16,13 +16,20 @@ export default class AppClass extends React.Component {
   async saveScore(e) {
     e.preventDefault();
     const { count, x, y, email } = this.state;
-    const result = await axios.post("http://localhost:9000/api/result", {
-      steps: count,
-      x,
-      y,
-      email,
-    });
-    this.setState({ msg: result.data.message });
+    e.preventDefault();
+    axios
+      .post("http://localhost:9000/api/result", {
+        x: x + 1,
+        y: y + 1,
+        email,
+        steps: count,
+      })
+      .then((response) => {
+        this.setState({ msg: response.data.message });
+      })
+      .catch((e) => {
+        this.setState({ msg: e.response.data.message });
+      });
   }
   reset() {
     this.setState({ count: 0, x: 1, y: 1, msg: "", email: "" });
@@ -56,8 +63,12 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates (2, 2)</h3>
-          <h3 id="steps">You moved {count} times</h3>
+          <h3 id="coordinates">
+            Coordinates ({x + 1}, {y + 1}){" "}
+          </h3>
+          <h3 id="steps">
+            You moved {count} {count === 1 ? "time" : "times"}
+          </h3>
         </div>
         <div id="grid">
           <div className={`square ${x === 0 && y === 0 && "active"}`}>

@@ -71,7 +71,7 @@ export default function AppFunctional(props) {
           Coordinates ({x}, {y})
         </h3>
         <h3 data-testid="moved" id="steps">
-          You moved {count} times
+          You moved {count} {count === 1 ? "time" : "times"}
         </h3>
       </div>
       <div id="grid">{grid}</div>
