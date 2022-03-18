@@ -15,7 +15,7 @@ test("move count, counts", () => {
   expect(moved).toHaveTextContent("You moved 0 times");
   const left = screen.getByTestId("move-left");
   left.click();
-  expect(moved).toHaveTextContent("You moved 1 times");
+  expect(moved).toHaveTextContent("You moved 1 time");
   const up = screen.getByTestId("move-up");
   up.click();
   expect(moved).toHaveTextContent("You moved 2 times");
