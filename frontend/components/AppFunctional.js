@@ -8,11 +8,25 @@ export default function AppFunctional(props) {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   function move(newX, newY) {
-    if (newX === x && newY === y) {
+    if (newX < 1) {
+      setMsg("You can't go left");
+      return;
+    }
+    if (newX > 3) {
+      setMsg("You can't go right");
+      return;
+    }
+    if (newY < 1) {
+      setMsg("You can't go up");
+      return;
+    }
+    if (newY > 3) {
+      setMsg("You can't go down");
       return;
     }
     setCount(count + 1);
     setCords({ x: newX, y: newY });
+    setMsg("");
   }
   const grid = [];
   for (let yy = 1; yy <= 3; yy++) {
@@ -44,6 +58,9 @@ export default function AppFunctional(props) {
       })
       .then((response) => {
         setMsg(response.data.message);
+      })
+      .catch((e) => {
+        setMsg(e.response.data.message);
       });
   }
 
@@ -65,21 +82,17 @@ export default function AppFunctional(props) {
         <button
           data-testid="move-left"
           id="left"
-          onClick={() => move(Math.max(1, x - 1), y)}
+          onClick={() => move(x - 1, y)}
         >
           LEFT
         </button>
-        <button
-          data-testid="move-up"
-          id="up"
-          onClick={() => move(x, Math.max(1, y - 1))}
-        >
+        <button data-testid="move-up" id="up" onClick={() => move(x, y - 1)}>
           UP
         </button>
-        <button id="right" onClick={() => move(Math.min(3, x + 1), y)}>
+        <button id="right" onClick={() => move(x + 1, y)}>
           RIGHT
         </button>
-        <button id="down" onClick={() => move(x, Math.min(3, y + 1))}>
+        <button id="down" onClick={() => move(x, y + 1)}>
           DOWN
         </button>
         <button
@@ -88,6 +101,8 @@ export default function AppFunctional(props) {
           onClick={() => {
             setCords({ x: 2, y: 2 });
             setCount(0);
+            setMsg("");
+            setEmail("");
           }}
         >
           reset

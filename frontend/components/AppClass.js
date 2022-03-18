@@ -25,31 +25,30 @@ export default class AppClass extends React.Component {
     this.setState({ msg: result.data.message });
   }
   reset() {
-    this.setState({ count: 0, x: 1, y: 1 });
+    this.setState({ count: 0, x: 1, y: 1, msg: "", email: "" });
   }
   move(xMove, yMove) {
     const { count, x, y } = this.state;
     let newX = x + xMove;
     let newY = y + yMove;
-    let moved = true;
-
     if (newX < 0) {
-      newX = 0;
-    } else if (newX > 2) {
-      newX = 2;
+      this.setState({ msg: "You can't go left" });
+      return;
+    }
+    if (newX > 2) {
+      this.setState({ msg: "You can't go right" });
+      return;
     }
     if (newY < 0) {
-      newY = 0;
-    } else if (newY > 2) {
-      newY = 2;
+      this.setState({ msg: "You can't go up" });
+      return;
     }
-    if (newX === x && newY === y) {
-      moved = false;
+    if (newY > 2) {
+      this.setState({ msg: "You can't go down" });
+      return;
     }
 
-    if (moved) {
-      this.setState({ count: count + 1, x: newX, y: newY });
-    }
+    this.setState({ count: count + 1, x: newX, y: newY, msg: "" });
   }
   render() {
     const { count, x, y } = this.state;
