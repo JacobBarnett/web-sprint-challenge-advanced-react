@@ -29,6 +29,9 @@ export default class AppClass extends React.Component {
       })
       .catch((e) => {
         this.setState({ msg: e.response.data.message });
+      })
+      .finally(() => {
+        this.setState({ msg: "" });
       });
   }
   reset() {
@@ -64,7 +67,7 @@ export default class AppClass extends React.Component {
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">
-            Coordinates ({x + 1}, {y + 1}){" "}
+            Coordinates ({x + 1}, {y + 1})
           </h3>
           <h3 id="steps">
             You moved {count} {count === 1 ? "time" : "times"}
